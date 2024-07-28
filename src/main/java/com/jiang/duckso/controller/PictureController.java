@@ -27,18 +27,12 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/picture")
 public class PictureController {
 
-
     @Resource
     private PictureService pictureService;
-
 
     @PostMapping("/list/page/vo")
     public BaseResponse<Page<Picture>> listPostVOByPage(@RequestBody PictureQueryRequest pictureQueryRequest,
                                                         HttpServletRequest request) {
-
-        if (ObjectUtils.isEmpty(pictureQueryRequest)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为空");
-        }
         int current = pictureQueryRequest.getCurrent();
         int pageSize = pictureQueryRequest.getPageSize();
         //限制爬虫：

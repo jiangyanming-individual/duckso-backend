@@ -1,6 +1,5 @@
-# SpringBoot 项目初始模板
+# SpringBoot + vue3 + ElasticSearch 聚合搜索平台
 
-[toc]
 
 ## 模板特点
 

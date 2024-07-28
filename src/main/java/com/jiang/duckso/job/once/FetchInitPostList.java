@@ -4,14 +4,10 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.jiang.duckso.common.ErrorCode;
-import com.jiang.duckso.exception.BusinessException;
 import com.jiang.duckso.model.entity.Post;
 import com.jiang.duckso.service.PostService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
-
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +24,6 @@ public class FetchInitPostList implements CommandLineRunner {
 
     @Resource
     private PostService postService;
-
 
     @Override
     public void run(String... args) throws Exception {

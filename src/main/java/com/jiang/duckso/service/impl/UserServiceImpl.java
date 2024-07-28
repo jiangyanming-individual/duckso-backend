@@ -2,11 +2,13 @@ package com.jiang.duckso.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jiang.duckso.constant.CommonConstant;
 import com.jiang.duckso.constant.UserConstant;
 import com.jiang.duckso.exception.BusinessException;
 import com.jiang.duckso.common.ErrorCode;
+import com.jiang.duckso.exception.ThrowUtils;
 import com.jiang.duckso.mapper.UserMapper;
 import com.jiang.duckso.model.dto.user.UserQueryRequest;
 import com.jiang.duckso.model.entity.User;
@@ -15,10 +17,12 @@ import com.jiang.duckso.model.vo.LoginUserVO;
 import com.jiang.duckso.model.vo.UserVO;
 import com.jiang.duckso.service.UserService;
 import com.jiang.duckso.utils.SqlUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -27,7 +31,6 @@ import org.springframework.util.DigestUtils;
 
 /**
  * 用户服务实现
- *
  */
 @Service
 @Slf4j
@@ -232,5 +235,31 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         queryWrapper.orderBy(SqlUtils.validSortField(sortField), sortOrder.equals(CommonConstant.SORT_ORDER_ASC),
                 sortField);
         return queryWrapper;
+    }
+
+
+    /**
+     * 分页查询：
+     *
+     * @param userQueryRequest
+     * @return
+     */
+    @Override
+    public Page<UserVO> listUserVOByPage(UserQueryRequest userQueryRequest) {
+        int current = userQueryRequest.getCurrent();
+        int pageSize = userQueryRequest.getPageSize();
+        ThrowUtils.throwIf(pageSize > 20, ErrorCode.NO_AUTH_ERROR, "禁止爬虫");
+        Page<User> userPage = this.page(new Page<>(current, pageSize), getQueryWrapper(userQueryRequest));
+        //获取源数据：
+        List<User> userList = userPage.getRecords();
+        //vo
+        Page<UserVO> userVOPage = new Page<>(current, pageSize, userPage.getTotal());
+        //判空操作：
+        if (CollUtil.isEmpty(userList)) {
+            return userVOPage;
+        }
+        //用户信息脱敏：
+        List<UserVO> userVOList = this.getUserVO(userList);
+        return userVOPage.setRecords(userVOList);
     }
 }

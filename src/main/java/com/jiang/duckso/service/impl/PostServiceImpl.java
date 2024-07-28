@@ -21,6 +21,7 @@ import com.jiang.duckso.model.vo.UserVO;
 import com.jiang.duckso.service.PostService;
 import com.jiang.duckso.service.UserService;
 import com.jiang.duckso.utils.SqlUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
 import lombok.extern.slf4j.Slf4j;
 import cn.hutool.core.collection.CollUtil;
 import org.apache.commons.lang3.ObjectUtils;
@@ -48,7 +50,6 @@ import org.springframework.stereotype.Service;
 
 /**
  * 帖子服务实现
- *
  */
 @Service
 @Slf4j
@@ -224,6 +225,13 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         return page;
     }
 
+    /**
+     * 单个对象脱敏
+     *
+     * @param post
+     * @param request
+     * @return
+     */
     @Override
     public PostVO getPostVO(Post post, HttpServletRequest request) {
         PostVO postVO = PostVO.objToVo(post);
@@ -255,6 +263,13 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         return postVO;
     }
 
+    /**
+     * 分页脱敏
+     *
+     * @param postPage
+     * @param request
+     * @return
+     */
     @Override
     public Page<PostVO> getPostVOPage(Page<Post> postPage, HttpServletRequest request) {
         List<Post> postList = postPage.getRecords();
@@ -295,6 +310,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
                 user = userIdUserListMap.get(userId).get(0);
             }
             postVO.setUser(userService.getUserVO(user));
+            //true/false表示文章是否点赞或者收藏
             postVO.setHasThumb(postIdHasThumbMap.getOrDefault(post.getId(), false));
             postVO.setHasFavour(postIdHasFavourMap.getOrDefault(post.getId(), false));
             return postVO;
@@ -302,6 +318,28 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         postVOPage.setRecords(postVOList);
         return postVOPage;
     }
+
+    /**
+     * 分页查询：
+     *
+     * @param postQueryRequest
+     * @return
+     */
+    @Override
+    public Page<PostVO> listPostVOByPage(PostQueryRequest postQueryRequest, HttpServletRequest request) {
+        int current = postQueryRequest.getCurrent();
+        int pageSize = postQueryRequest.getPageSize();
+        Page<Post> postPage = this.page(new Page<>(current, pageSize), getQueryWrapper(postQueryRequest));
+        List<Post> postList = postPage.getRecords();
+        Page<PostVO> postVOPage = new Page<>(current, pageSize, postPage.getTotal());
+        //判空的操作；
+        if (CollUtil.isEmpty(postList)) {
+            return postVOPage;
+        }
+        //返回数据
+        return this.getPostVOPage(postPage, request);
+    }
+
 
 }
 

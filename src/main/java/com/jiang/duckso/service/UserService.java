@@ -1,18 +1,26 @@
 package com.jiang.duckso.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jiang.duckso.common.BaseResponse;
+import com.jiang.duckso.common.ErrorCode;
+import com.jiang.duckso.common.ResultUtils;
+import com.jiang.duckso.exception.BusinessException;
+import com.jiang.duckso.exception.ThrowUtils;
 import com.jiang.duckso.model.dto.user.UserQueryRequest;
 import com.jiang.duckso.model.entity.User;
 import com.jiang.duckso.model.vo.LoginUserVO;
 import com.jiang.duckso.model.vo.UserVO;
+
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * 用户服务
- *
  */
 public interface UserService extends IService<User> {
 
@@ -106,5 +114,9 @@ public interface UserService extends IService<User> {
      * @return
      */
     QueryWrapper<User> getQueryWrapper(UserQueryRequest userQueryRequest);
+
+
+    Page<UserVO> listUserVOByPage(UserQueryRequest userQueryRequest);
+
 
 }

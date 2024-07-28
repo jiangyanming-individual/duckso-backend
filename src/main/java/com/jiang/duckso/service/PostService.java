@@ -3,9 +3,12 @@ package com.jiang.duckso.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.jiang.duckso.common.BaseResponse;
 import com.jiang.duckso.model.dto.post.PostQueryRequest;
 import com.jiang.duckso.model.entity.Post;
 import com.jiang.duckso.model.vo.PostVO;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -55,4 +58,8 @@ public interface PostService extends IService<Post> {
      * @return
      */
     Page<PostVO> getPostVOPage(Page<Post> postPage, HttpServletRequest request);
+
+
+    Page<PostVO> listPostVOByPage(PostQueryRequest postQueryRequest,HttpServletRequest request);
+
 }
