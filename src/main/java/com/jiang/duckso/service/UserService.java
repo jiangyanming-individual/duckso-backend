@@ -116,6 +116,11 @@ public interface UserService extends IService<User> {
     QueryWrapper<User> getQueryWrapper(UserQueryRequest userQueryRequest);
 
 
+    /**
+     * 分页搜索用户数据
+     * @param userQueryRequest
+     * @return
+     */
     Page<UserVO> listUserVOByPage(UserQueryRequest userQueryRequest);
 
 

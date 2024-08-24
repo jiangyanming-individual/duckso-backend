@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- *
+ * 腾讯云存储对象
  */
 @Configuration
 @ConfigurationProperties(prefix = "cos.client")

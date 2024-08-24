@@ -16,5 +16,5 @@ public interface PictureService {
      * @param pageSize 页面有多少条数据
      * @return
      */
-    Page<Picture> searchPicture(String searchText, long current, long pageSize);
+    Page<Picture> searchPicture(String searchText, int current, int pageSize);
 }

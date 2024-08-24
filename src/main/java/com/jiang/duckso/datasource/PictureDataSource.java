@@ -1,12 +1,10 @@
-package com.jiang.duckso.service.impl;
+package com.jiang.duckso.datasource;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jiang.duckso.common.ErrorCode;
 import com.jiang.duckso.exception.BusinessException;
 import com.jiang.duckso.model.entity.Picture;
-import com.jiang.duckso.service.PictureService;
-import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,24 +15,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-/**
- * 图片服务实现：
- */
 @Service
-@Slf4j
-public class PictureServiceImpl implements PictureService {
-    /**
-     * 搜索图片
-     *
-     * @param searchText
-     * @param current
-     * @param pageSize
-     * @return
-     */
+public class PictureDataSource implements DataSource{
     @Override
-    public Page<Picture> searchPicture(String searchText, int current, int pageSize) {
-
+    public Page<Picture> doSearch(String searchText, int current, int pageSize) {
         //当前页下标：
         long currentNum = (current - 1) * pageSize;
         String url = String.format("https://www.bing.com/images/search?q=%s&first=%s", searchText, currentNum);
