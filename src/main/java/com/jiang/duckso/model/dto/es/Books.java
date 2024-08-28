@@ -17,8 +17,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 @Document(indexName="books")
 public class Books {
     @Id
-    private String id;
-
+    private Long id;
     /**
      * 字段类型
      */

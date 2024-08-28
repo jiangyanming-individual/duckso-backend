@@ -1,4 +1,4 @@
-package com.jiang.duckso.esdao;
+package com.jiang.duckso.esrepository;
 
 import com.jiang.duckso.model.dto.post.PostEsDTO;
 

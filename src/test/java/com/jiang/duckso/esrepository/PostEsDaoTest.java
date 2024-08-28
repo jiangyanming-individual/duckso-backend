@@ -1,4 +1,4 @@
-package com.jiang.duckso.esdao;
+package com.jiang.duckso.esrepository;
 
 import com.jiang.duckso.model.dto.post.PostEsDTO;
 import com.jiang.duckso.model.dto.post.PostQueryRequest;
@@ -52,8 +52,6 @@ public class PostEsDaoTest {
         postEsDTO.setTitle("test");
         postEsDTO.setContent("test");
         postEsDTO.setTags(Arrays.asList("java", "python"));
-        postEsDTO.setThumbNum(1);
-        postEsDTO.setFavourNum(1);
         postEsDTO.setUserId(1L);
         postEsDTO.setCreateTime(new Date());
         postEsDTO.setUpdateTime(new Date());

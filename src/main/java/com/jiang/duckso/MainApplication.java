@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
@@ -16,6 +17,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @MapperScan("com.jiang.duckso.mapper")
 @EnableScheduling
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
+@EnableElasticsearchRepositories("com.jiang.duckso.esrepository") // spring data es
 public class MainApplication {
 
     public static void main(String[] args) {

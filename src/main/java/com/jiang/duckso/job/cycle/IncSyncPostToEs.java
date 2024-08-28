@@ -1,6 +1,6 @@
 package com.jiang.duckso.job.cycle;
 
-import com.jiang.duckso.esdao.PostEsDao;
+import com.jiang.duckso.esrepository.PostEsDao;
 import com.jiang.duckso.mapper.PostMapper;
 import com.jiang.duckso.model.dto.post.PostEsDTO;
 import com.jiang.duckso.model.entity.Post;
